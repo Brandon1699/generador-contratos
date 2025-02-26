@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contrato 1.0</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #002E5D, #81f3db);
+            margin: 0;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #002E5D;
+        }
+        input[type="email"] {
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #002E5D;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #response {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Contrato 1.0</h1>
+        <input type="email" id="email" placeholder="Ingresa el correo electrónico" required>
+        <button onclick="triggerWebhook()">Generar Contrato</button>
+        <p id="response"></p>
+    </div>
+
+    <script>
+        async function triggerWebhook() {
+            const email = document.getElementById("email").value;
+            const webhookUrl = `https://brandonfinniu.app.n8n.cloud/webhook-test/d2ddd4b3-0cf2-4a62-a660-a73af47a5d03?email=${encodeURIComponent(email)}`;
+            const responseElement = document.getElementById("response");
+
+            if (!email) {
+                responseElement.textContent = "Por favor, ingresa un correo electrónico.";
+                responseElement.style.color = "red";
+                return;
+            }
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: "GET"
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log("Respuesta del servidor:", data); // Depuración
+
+                // Muestra un mensaje de éxito
+                responseElement.textContent = "Contrato generado correctamente.";
+                responseElement.style.color = "green";
+            } catch (error) {
+                console.error("Error en la solicitud:", error); // Depuración
+                responseElement.textContent = "Contrato ya existe o error de conexion.";
+                responseElement.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
