@@ -99,9 +99,13 @@
             responseElement.textContent = ""; // Limpiar mensajes anteriores
 
             try {
-                const webhookUrl = `https://brandonfinniu.app.n8n.cloud/webhook/0fe270cf-02e1-4f92-8ef1-c8ad59f22074?email=${encodeURIComponent(email)}`;
+                const webhookUrl = "https://brandonfinniu.app.n8n.cloud/webhook/0fe270cf-02e1-4f92-8ef1-c8ad59f22074";
                 const response = await fetch(webhookUrl, {
-                    method: "GET"
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json", // Especifica que el cuerpo es JSON
+                    },
+                    body: JSON.stringify({ email }), // Envía el correo en el cuerpo de la solicitud
                 });
 
                 if (!response.ok) {
