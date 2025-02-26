@@ -68,7 +68,7 @@
     <script>
         async function triggerWebhook() {
             const email = document.getElementById("email").value;
-            const webhookUrl = `https://brandonfinniu.app.n8n.cloud/webhook-test/d2ddd4b3-0cf2-4a62-a660-a73af47a5d03?email=${encodeURIComponent(email)}`;
+            const webhookUrl = `https://brandonfinniu.app.n8n.cloud/webhook/d2ddd4b3-0cf2-4a62-a660-a73af47a5d03?email=${encodeURIComponent(email)}`;
             const responseElement = document.getElementById("response");
 
             if (!email) {
